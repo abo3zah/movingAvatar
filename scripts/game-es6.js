@@ -1,77 +1,124 @@
-class Game{
-    constructor(){
+var player;
+var stage;
+var frameWidth;
+var frameHeight;
+var animationStatus = false;
 
-        //define variables
-        this.canvas = document.getElementById("game-canvas");
-        this.stage = new createjs.Stage(this.canvas);
-
-        //enable touch events
-        this.stage.enableMouseOver(10);
-
-        //stage width
-        this.stage.width = this.canvas.width;
-        this.stage.height = this.canvas.height;
-
-        //enable tap on touch device
-        createjs.Touch.enable(this.stage);
-
-        //making the game shapes more sharp
-        this.retinalize();
-
-        //set frame per
-        createjs.Ticker.setFPS(60);
-
-        //keep re-drawing the stage.
-        createjs.Ticker.on("tick", this.stage)
-
-        var framePerRow = 4;
-        var framePerCol = 4;
-        var count = framePerRow * framePerCol;
-        var width = 1601;
-        var height = 2397;
-        var frameWidth = width/framePerRow;
-        var frameHeight = height/framePerCol;
-
-        var data = {
-            images: ["img/sprites.png"],
-            frames: {width:width, height:height, regX: 0, regY:0},
-            animations: {
-                runFront:[0,3],
-                runBack:[4,7],
-                runLeft:[8,11],
-                runRight:[12,15]
-            }
-        };
-        var spriteSheet = new createjs.SpriteSheet(data);
-        var animation = new createjs.Sprite(spriteSheet);
-        animation.gotoAndPlay('runFront');
-        
-        //animation.scaleX = this.stage.width/frameWidth;
-        //animation.scaleY = this.stage.height/frameHeight;
-
-        this.stage.addChild(animation);
-    }
-
-    retinalize(){
-        this.stage.width = this.canvas.width;
-        this.stage.height = this.canvas.height;
-
-        let ratio = window.devicePixelRatio;
-        if (ratio === undefined){
-            return;
-        }
-
-        this.canvas.setAttribute('width', Math.round( this.stage.width * ratio))
-        this.canvas.setAttribute('height', Math.round( this.stage.height * ratio))
-
-        this.stage.scaleX = this.stage.scaleY = ratio;
-
-        //set CSS style
-        this.canvas.style.width = this.stage.width + "px";
-        this.canvas.style.height = this.stage.height + "px";
-    }
+function handleKeyDown(evt){
+    console.log(evt);
 }
 
 function init() {
-    var game = new Game();
+    var imageWidth = 408;
+    var imageHeight = 611;
+    var imagePerRow = 4;
+    var imagePerCol =  4;
+    frameWidth = imageWidth/imagePerCol;
+    frameHeight = imageHeight/imagePerRow;
+    var data = {
+        "images": ["img/sprites-transparent.png"],
+        "framerate": 5,
+        "frames": [
+            [0*frameWidth, 0*frameHeight, frameWidth, frameHeight],
+            [1*frameWidth, 0*frameHeight, frameWidth, frameHeight],
+            [2*frameWidth, 0*frameHeight, frameWidth, frameHeight],
+            [3*frameWidth, 0*frameHeight, frameWidth, frameHeight],
+            [0*frameWidth, 1*frameHeight, frameWidth, frameHeight],
+            [1*frameWidth, 1*frameHeight, frameWidth, frameHeight],
+            [2*frameWidth, 1*frameHeight, frameWidth, frameHeight],
+            [3*frameWidth, 1*frameHeight, frameWidth, frameHeight],
+            [0*frameWidth, 2*frameHeight, frameWidth, frameHeight],
+            [1*frameWidth, 2*frameHeight, frameWidth, frameHeight],
+            [2*frameWidth, 2*frameHeight, frameWidth, frameHeight],
+            [3*frameWidth, 2*frameHeight, frameWidth, frameHeight],
+            [0*frameWidth, 3*frameHeight, frameWidth, frameHeight],
+            [1*frameWidth, 3*frameHeight, frameWidth, frameHeight],
+            [2*frameWidth, 3*frameHeight, frameWidth, frameHeight],
+            [3*frameWidth, 3*frameHeight, frameWidth, frameHeight]
+        ],
+        "animations": {
+            "frontRun": {
+                frames:[0, 1, 2, 3, 0, 1, 2, 3],
+                next:"stop"
+            },
+            "backRun": {
+                frames:[4, 5, 6, 7, 4, 5, 6, 7],
+                next:"stop"
+            },
+            "leftRun": {
+                frames:[8, 9, 10, 11, 8, 9, 10],
+                next:"stop"
+            },
+            "rightRun": {
+                frames:[12, 13, 14, 15,12, 13, 14],
+                next:"stop"
+            },
+            "stop":{
+                frames:[0]
+            }
+        }
+    }
+
+    canvas = document.getElementById("game-canvas");
+    canvas.width = frameWidth * 10;
+    canvas.height = frameHeight * 5;
+
+    stage = new createjs.Stage("game-canvas");
+
+    var spriteSheet = new createjs.SpriteSheet(data);
+    player = new createjs.Sprite(spriteSheet);
+
+    stage.addChild(player);
+
+    // Add Betty to the stage, and add her as a listener to Ticker to get updates each frame.
+    createjs.Ticker.on("tick", stage);
+
+    createjs.Ticker.timingMode = createjs.Ticker.RAF;
+    createjs.Ticker.addEventListener("tick", stage);
+    document.addEventListener('keydown', handleKeyDown);
+}
+
+function handleKeyDown(evt){
+
+    var playerSpeed = 600;
+
+    if (animationStatus == true)return
+
+    if (evt.key == "ArrowLeft"){
+
+        if (player.x-frameWidth<0)return
+
+        player.gotoAndPlay('leftRun');
+
+        createjs.Tween.get(player,{loop:false})
+            .to({x:player.x-frameWidth}, playerSpeed, createjs.Ease.getPowIn(4)).addEventListener('complete', function(){animationStatus=false});
+    }
+    if (evt.key == "ArrowRight"){
+
+        if (player.x+2*frameWidth>frameWidth*10)return
+
+        player.gotoAndPlay('rightRun');
+
+        createjs.Tween.get(player,{loop:false})
+            .to({x:player.x+frameWidth}, playerSpeed, createjs.Ease.getPowIn(4)).addEventListener('complete', function(){animationStatus=false});
+    }
+    if (evt.key == "ArrowUp"){
+
+        if (player.y-frameHeight<0)return
+
+        player.gotoAndPlay('backRun');
+
+        createjs.Tween.get(player,{loop:false})
+            .to({y:player.y-frameHeight}, playerSpeed+200, createjs.Ease.getPowIn(4)).addEventListener('complete', function(){animationStatus=false});
+    }
+    if (evt.key == "ArrowDown"){
+
+        if (player.y+2*frameHeight>frameHeight*5)return
+
+        player.gotoAndPlay('frontRun');
+
+        createjs.Tween.get(player,{loop:false})
+            .to({y:player.y+frameHeight}, playerSpeed+200, createjs.Ease.getPowIn(4)).addEventListener('complete', function(){animationStatus=false})
+    }
+    animationStatus = true;
 }

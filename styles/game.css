@@ -1,4 +1,5 @@
-canvas {
-    margin: auto;
+canvas{
+    background-color: aqua;
     display: block;
+    margin: auto;
 }
