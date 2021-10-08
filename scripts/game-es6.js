@@ -4,6 +4,9 @@ var frameWidth;
 var frameHeight;
 var animationStatus = false;
 
+//TODO: Player as an Object
+//TODO: load the data as json
+
 function handleKeyDown(evt){
     console.log(evt);
 }
