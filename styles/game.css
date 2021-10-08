@@ -1,5 +1,25 @@
 canvas{
     background-color: aqua;
     display: block;
-    margin: 5px auto;
+    margin: 10px auto;
 }
+
+/* // normal style
+#header-image {
+    background-repeat: no-repeat;
+    background-image:url('image.gif');
+}
+
+// show a larger image when you're on a big screen
+@media screen and (min-width: 1200px) {
+    #header-image {
+        background-image:url('large-image.gif');
+    }
+}
+
+// remove header image when printing.
+@media print {
+    #header-image {
+        display: none;
+    }
+} */

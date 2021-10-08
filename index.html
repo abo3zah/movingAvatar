@@ -1,40 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google Analytics -->
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-        
-        ga('create', 'UA-XXXXX-Y', 'auto');
-        ga('send', 'pageview');
-    </script>
-    <!-- End Google Analytics -->
+    <!-- TODO: Google Analytics -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta name="description" content="This is a simple game">
-    <meta name="google-site-verification" content="J7BD4t2DFZyViMNIEI2rtPG0hc36dYCSrdFzW2mdrPY" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gemunu+Libre:wght@700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Slab&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/game.css">
+    <link rel="stylesheet" media='all' href="styles/game.css">
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <link rel="apple-touch-startup-image" href="/favicon.png">
+    <!-- <link rel='stylesheet' media='print' href='print.css' /> -->
+    <!-- <link rel='stylesheet' media='screen and (min-width: 701px)' href='medium.css' /> -->
     <title>Avatar</title>
 </head>
 <body onload="init();">
-    <div style="font-family: 'Josefin Slab', serif; text-align: center;background-color:bisque;" itemscope itemtype ="https://abo3zah.github.io/movingAvatar/">
+    <div style="font-family: 'Josefin Slab', serif; text-align: center;background-color:bisque;" itemscope itemtype ="https://abo3zah.github.io/movingAvatar/" role="title">
         <h1 itemprop="title">Avatar</h1>
         <span itemprop="description">simple game</span>
     </div>
-    <canvas id="game-canvas" width="1020" height="763.75">
+    <canvas id="game-canvas" width="1020" height="763.75" role="main">
         This is an interactive game.
     </canvas>
 
     <script src="scripts/createjs.min.js"></script>
     <script src="scripts/game-es6.js"></script>
-    <!-- <script src="scripts/game-es6.js"></script> -->
 </body>
 </html>
