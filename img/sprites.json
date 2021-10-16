@@ -1,16 +1,26 @@
 {
-    "images": [
-        "img/sprites.png"
-    ],
-    "framerate": 4,
-    "frames": [
-        [1, 1, 400, 599],
-        [401, 1, 400, 599],
-        [802, 1, 400, 599],
-        [1203, 1, 400, 599]
-    ],
+    "images": ["img/sprites-transparent.png"],
+    "framerate": 5,
+    "frames": {"width":102, "height":152, "count":16, "regX": 0, "regY":0, "spacing":0, "margin":0},
     "animations": {
-        "front": [0, 1, 2, 3]
+        "frontRun": {
+            "frames":[0, 1, 2, 3, 0, 1, 2, 3],
+            "next":"stop"
+        },
+        "backRun": {
+            "frames":[4, 5, 6, 7, 4, 5, 6, 7],
+            "next":"stop"
+        },
+        "leftRun": {
+            "frames":[8, 9, 10, 11, 8, 9, 10],
+            "next":"stop"
+        },
+        "rightRun": {
+            "frames":[12, 13, 14, 15,12, 13, 14],
+            "next":"stop"
+        },
+        "stop":{
+            "frames":[0]
+        }
     }
 }
-    
